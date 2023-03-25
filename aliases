@@ -1,0 +1,24 @@
+#!/bin/zsh
+alias sudo="sudo "
+case $(uname -s) in
+	Darwin | FreeBSD) alias ls="ls -Ghp";;
+	Linux) alias ls="ls --color -hp";;
+esac
+alias la="ls -ltr"
+alias ll="ls -lAtr"
+alias gp="grep -E -inH --color=auto"
+alias df="df -ha"
+alias cp="cp -v"
+alias mv="mv -v"
+alias tmuxl="tmux ls"
+alias tmuxa="tmux attach -t"
+alias tmuxk="tmux kill-session -t"
+alias tmuxs="tmux new-session -s"
+alias hg='history 0 | awk '\''{for (i=2; i<NF; i++) printf "%s ", $i; print $NF}'\'' | grep -E --color=auto'
+
+function ff { ll $1 | awk -v name="$2" 'tolower($NF) ~ name {print}' }
+function ffind { find $1 -type f -exec grep -F -inH --color=auto $2 {} + 2> /dev/null }
+function efind { find $1 -type f -exec grep -E -inH --color=auto $2 {} + 2> /dev/null }
+
+function tping { ping "$@" | while read pong; do echo "$(date +'%T'): $pong"; done }
+function tping6 { ping6 "$@" | while read pong; do echo "$(date +'%T'): $pong"; done }
